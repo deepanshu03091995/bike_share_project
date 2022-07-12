@@ -13,7 +13,7 @@ def index():
         sharing = SharingException(e,sys)
         logging.info(sharing.error_message)
     logging.info("Testing logger module")
-    return "CI CD pipeline has been established."
+    return "CI CD pipeline established."
 
 
 if __name__=="__main__":
