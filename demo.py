@@ -4,7 +4,7 @@ import logging
 
 def main():
     try:
-        config = Configuartion().get_training_pipeline_config()
+        config = Configuartion().get_data_ingestion_config()
         print(config)
     except Exception as e:
         logging.error(f"{e}")
