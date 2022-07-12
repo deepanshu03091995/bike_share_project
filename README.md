@@ -99,3 +99,12 @@ Tos stop docker conatiner
 ```
 docker stop <container_id>
 ```
+```
+For Jupyter Notebook to work in vs code
+```
+pip install ipykernel -U --user --force-reinstall
+```
+To read YAML file
+```
+pip install pyYAML
+```
