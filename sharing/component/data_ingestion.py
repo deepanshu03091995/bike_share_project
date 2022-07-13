@@ -76,7 +76,7 @@ class DataIngestion:
             sharing_data_frame = pd.read_csv(sharing_file_path)
             
             sharing_data_frame["count_cat"] = pd.cut(
-                sharing_data_frame["cnt"],
+                sharing_data_frame["count"],
                 bins=[0.0, 1.5, 3.0, 4.5, 6.0, np.inf],
                 labels=[1,2,3,4,5]
             )
