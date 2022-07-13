@@ -1,16 +1,16 @@
 from distutils.command.config import config
 from sharing.config.configuration import *
 from sharing.component.data_ingestion import DataIngestion
-from sharing.entity.config_entity import DataIngestionConfig
+from sharing.entity.config_entity import DataValidationConfig
 from sharing.pipeline.pipeline import Pipeline
 import logging
 
 def main():
     try:
-        pipe = Pipeline()
-        pipe.run_pipeline()
-        #config = Configuartion().get_data_ingestion_config()
-        #print(config)
+        #pipe = Pipeline()
+        #pipe.run_pipeline()
+        config = Configuartion().get_data_validation_config()
+        print(config)
         
         #ingested = DataIngestion(data_ingestion_config=DataIngestionConfig)
         #ingested.download_sharing_data()
