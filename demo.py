@@ -9,10 +9,10 @@ import logging
 
 def main():
     try:
-        pipe = Pipeline()
-        pipe.run_pipeline()
-        #config = Configuartion().get_data_validation_config()
-        #print(config)
+        #pipe = Pipeline()
+        #pipe.run_pipeline()
+        config = Configuartion().get_data_transformation_config()
+        print(config)
         #ingested = DataIngestion(data_ingestion_config=DataIngestionConfig)
         #ingested.download_sharing_data()
     
