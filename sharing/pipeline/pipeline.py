@@ -8,6 +8,7 @@ from sharing.entity.artifact_entity import *
 from sharing.component.data_ingestion import DataIngestion
 from sharing.component.data_validation import DataValidation
 from sharing.component.data_transformation import DataTransformation
+from sharing.component.model_trainer import ModelTrainer
 
 class Pipeline:
     
@@ -44,8 +45,14 @@ class Pipeline:
             raise SharingException(e,sys) from e
         
 
-    def start_model_trainer(self):
-        pass
+    def start_model_trainer(self, data_transformation_artifact : DataTransformationArtifact)-> ModelTrainerArtifact:
+        try:
+            model_trainer = ModelTrainer( data_transformation_artifact= data_transformation_artifact,
+                                         model_trainer_config = self.config.get_model_trainer_config())
+            model_trainer.initiate_model_trainer()
+            
+        except Exception as e:
+            raise SharingException(e,sys) from e
 
     def start_model_evaluation(self):
         pass
@@ -61,6 +68,8 @@ class Pipeline:
             data_validation_artifact = self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)
             data_transformation_artifact = self.start_data_transformation(data_ingestion_artifact=data_ingestion_artifact,
                                                                           data_validation_artifact=data_validation_artifact)
+            
+            model_trainer_artifact = self.start_model_trainer(data_transformation_artifact=data_transformation_artifact)
 
         except Exception as e:
             raise SharingException(e,sys) from e
