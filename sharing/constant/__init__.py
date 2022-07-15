@@ -66,3 +66,12 @@ MODEL_TRAINER_MODEL_CONFIG_FILE_NAME_KEY = "model_config_file_name"
 MODEL_EVALUATION_CONFIG_KEY = "model_evaluation_config"
 MODEL_EVALUATION_FILE_NAME_KEY = "model_evaluation_file_name"
 MODEL_EVALUATION_ARTIFACT_DIR = "model_evaluation"
+
+## Model Factory Related variables 
+
+GRID_SEARCH_KEY = 'grid_search'
+MODULE_KEY = 'module'
+CLASS_KEY = 'class'
+PARAM_KEY = 'params'
+MODEL_SELECTION_KEY = 'model_selection'
+SEARCH_PARAM_GRID_KEY = "search_param_grid"
