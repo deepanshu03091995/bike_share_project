@@ -76,3 +76,10 @@ CLASS_KEY = 'class'
 PARAM_KEY = 'params'
 MODEL_SELECTION_KEY = 'model_selection'
 SEARCH_PARAM_GRID_KEY = "search_param_grid"
+
+BEST_MODEL_KEY = "best_model"
+HISTORY_KEY = "history"
+MODEL_PATH_KEY = "model_path"
+
+EXPERIMENT_DIR_NAME="experiment"
+EXPERIMENT_FILE_NAME="experiment.csv"
