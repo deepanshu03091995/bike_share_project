@@ -8,10 +8,13 @@ from sharing.pipeline.pipeline import Pipeline
 from sharing.component.data_transformation import DataTransformation
 import logging
 
+
 def main():
     try:
-        pipe = Pipeline()
-        pipe.run_pipeline()
+        config_path = os.path.join("config","config.yaml")
+        pipeline = Pipeline(Configuartion(config_file_path=config_path))
+        #pipeline.run_pipeline()
+        pipeline.start()
         #config = Configuartion().get_model_evaluation_config()
         #print(config)
         #ingested = DataIngestion(data_ingestion_config=DataIngestionConfig)
