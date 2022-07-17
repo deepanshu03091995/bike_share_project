@@ -1,4 +1,3 @@
-from msilib import schema
 import sys, os
 from sharing.logger import logging
 from sharing.exception import SharingException 
