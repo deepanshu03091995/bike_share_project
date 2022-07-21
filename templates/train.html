@@ -1,0 +1,24 @@
+{% extends 'dashboard.html' %}
+
+{% block head %}
+<title>Train Status</title>
+{% endblock %}
+
+{% block content %}
+
+<main class="mt-5 pt-3">
+  <div class="container-fluid">
+Go to <a class="btn btn-primary" href="/">Home</a>
+<div class="row">
+    <div class="alert alert-primary" role="alert">
+        {{ context['message']}}
+      </div>
+  
+        {{ context['experiment']|safe }}
+
+   
+</div>
+
+      </div>
+      </main>  
+{% endblock %}

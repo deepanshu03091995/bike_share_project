@@ -1,0 +1,152 @@
+{% extends 'dashboard.html' %}
+
+{% block head %}
+
+
+<title>Single Count Predictor</title>
+{% endblock %}
+
+{% block content %}
+
+<main class="mt-5 pt-3">
+    <div class="container-fluid">
+
+<div class="row">
+    <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6">
+        <form action="/predict" method="post">
+            <div class="mb-3">
+                <label class="form-label">Season</label>
+                <select class="form-control" name="season" placeholder="Select value of season"
+                    required>
+                    {% for item in list_four %}
+                    <option value="{{ item }}">{{ item }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Year</label>
+                <select class="form-control" name="year" placeholder="Select value of season"
+                    required>
+                    {% for item in list_two %}
+                    <option value="{{ item }}">{{ item }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Month</label>
+                <select class="form-control" name="month" placeholder="Select value of Month"
+                    required>
+                    {% for item in months %}
+                    <option value="{{ item }}">{{ item }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Hours</label>
+                <select class="form-control" name="hour" placeholder="Select value of Month"
+                    required>
+                    {% for item in hours %}
+                    <option value="{{ item }}">{{ item }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Holiday</label>
+                <select class="form-control" name="holiday" placeholder="Select value of Holiday"
+                    required>
+                    {% for item in list_two %}
+                    <option value="{{ item }}">{{ item }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Weekday</label>
+                <select class="form-control" name="weekday" placeholder="Select value of Weekday"
+                    required>
+                    {% for item in weekdays %}
+                    <option value="{{ item }}">{{ item }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Workingday</label>
+                <select class="form-control" name="workingday" placeholder="Select value of workingday"
+                    required>
+                    {% for item in list_two %}
+                    <option value="{{ item }}">{{ item }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Weather</label>
+                <select class="form-control" name="weather" placeholder="Select value of Weather"
+                    required>
+                    {% for item in list_four %}
+                    <option value="{{ item }}">{{ item }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Temperature</label>
+               <input class="form-control" type="number" name = "temp" placeholder = "Temperature" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">humidity</label>
+               <input class="form-control" type="number" name = "humidity" placeholder = "Humidity" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Windspeed</label>
+               <input class="form-control" type="number" name = "windspeed" placeholder = "Windspeed" required>
+            </div>
+
+            <div class="mb-3">
+                <input class="btn btn-primary" type="submit" value="Predict Median House Value" required />
+            </div>
+        </form>
+    </div>
+    </div>
+  
+    <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                California housing price
+              </div>
+              <div class="card-body">
+                {% if context['housing_data'] is not none %}
+        <table class="table table-striped">
+            <caption>Califoria Housing Prediction </caption>
+            <tr>
+                <th>Input Feature</th>
+                <th>Feature Value</th>
+            </tr>
+            {% for column,value in context['housing_data'].items() %}
+            <tr>
+                <td>{{column}}</td>
+                <td>{{value[0]}}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td>median_house_value </td>
+                <td>
+                    {{ context['median_house_value'] }}
+                </td>
+            </tr>
+        </table>
+        {% endif %}
+
+              </div>
+            </div>
+            </div>
+    </div>
+    </main>
+ {% endblock %}
+

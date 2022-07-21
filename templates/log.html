@@ -1,0 +1,20 @@
+{% extends 'dashboard.html' %}
+
+{% block head %}
+
+
+<title>Log Details</title>
+{% endblock %}
+
+{% block content %}
+
+
+<main class="mt-5 pt-3">
+    <div class="container-fluid">
+        {{ context['log']|safe }}
+    </div>
+</main>
+
+
+        
+{% endblock %}
