@@ -8,7 +8,6 @@ from sharing.constant import *
 import boto3
 
 
-
 def upload_model_s3(model_path:str):
     try:
         session = boto3.Session(
