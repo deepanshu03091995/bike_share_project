@@ -3,7 +3,6 @@ import os,sys
 from sharing.exception import SharingException
 from sharing.util.util import load_object
 import pandas as pd
-import boto3
 from sharing.constant import *
 
 class SharingData:
@@ -71,55 +70,6 @@ class SharingPredictor:
         except Exception as e:
             raise SharingException(e, sys) from e
 
-    def s3_get_lattest_model_path(self):
-        try:
-            session = boto3.Session(
-            aws_access_key_id='AKIATCVRX4SFLGPWXGOJ',
-            aws_secret_access_key='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'
-            )   
-
-            #Creating S3 Resource From the Session.
-            s3 = session.resource('s3')
-            bucket = s3.Bucket(S3_BUCKET_NAME)
-
-            objs = bucket.objects.filter()
-            folder_pth = []
-            for obj in objs:
-                path, filename = os.path.split(obj.key)
-                # boto3 s3 download_file will throw exception if folder not exists
-                folder_pth.append(path)
-            
-            # perform conversion
-            for i in range(0, len(folder_pth)):
-                folder_pth[i] = folder_pth[i].replace("-","")
-            
-            s3_folder_name = list(map(int, folder_pth))
-
-            return max(s3_folder_name)  
-
-        except Exception as e:
-            raise SharingException(e,sys)
-    
-    def s3_download_model(self):
-        try:
-            folder_directory = self.s3_get_lattest_model_path()
-            session = boto3.Session(
-            aws_access_key_id='AKIATCVRX4SFLGPWXGOJ',
-            aws_secret_access_key='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'
-            )   
-
-            #Creating S3 Resource From the Session.
-            s3 = session.resource('s3')
-            bucket = s3.Bucket(S3_BUCKET_NAME)
-
-            prefix=str(folder_directory)+'/'
-
-            print(prefix)
-            
-        except Exception as e:
-            raise SharingException(e,sys)
-
-
     def get_latest_model_path(self):
         try:
             folder_name = list(map(int, os.listdir(self.model_dir)))
@@ -128,7 +78,6 @@ class SharingPredictor:
             #print("lateset_model ", latest_model_dir)
             file_name = os.listdir(latest_model_dir)[0]
             latest_model_path = os.path.join(latest_model_dir, file_name)
-            self.s3_download_model()
             return latest_model_path
         except Exception as e:
             raise SharingException(e, sys) from e
