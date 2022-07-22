@@ -72,7 +72,6 @@ def predict():
             year = year,month= month,hour = hour, holiday=holiday, weekday = weekday, workingday=workingday, weather=weather, temp = temp,
             humidity=humidity, windspeed=windspeed)
             sharing_df = sharing_data.get_housing_input_data_frame()
-            print("sharing_df",sharing_df)
             sharing_predictor = SharingPredictor(model_dir=MODEL_DIR)
             
             median_housing_value = sharing_predictor.predict(X=sharing_df)
@@ -80,7 +79,6 @@ def predict():
             HOUSING_DATA_KEY: sharing_data.get_sharing_data_as_dict(),
             MEDIAN_HOUSING_VALUE_KEY: median_housing_value,
         }
-            print(context)
             return render_template('predict.html', context=context, list_four = list_four,list_two = list_two, months = months, hours = hours, weekdays = weekdays)
         return render_template("predict.html", context=context,list_four = list_four,list_two = list_two, months = months, hours = hours, weekdays = weekdays)
     

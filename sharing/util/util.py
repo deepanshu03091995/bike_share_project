@@ -5,7 +5,38 @@ import numpy as np
 import dill
 import pandas as pd
 from sharing.constant import *
+import boto3
 
+
+
+def upload_model_s3(model_path:str):
+    try:
+        session = boto3.Session(
+        aws_access_key_id='AKIATCVRX4SFLGPWXGOJ',
+        aws_secret_access_key='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'
+        )   
+
+        #Creating S3 Resource From the Session.
+        s3 = session.resource('s3')
+        model_file_name = os.path.basename(model_path)
+
+        object = s3.Object(S3_BUCKET_NAME, model_file_name)
+
+        directoryname = CURRENT_TIME_STAMP
+
+        KeyFileName = "{dirname}/{fname}".format(dirname = directoryname,fname=model_file_name) 
+        
+        result = object.put(Body=open(model_path, 'rb'), Key=KeyFileName)
+
+        res = result.get('ResponseMetadata')
+
+        if res.get('HTTPStatusCode') == 200:
+            print('File Uploaded Successfully')
+
+        else:
+            print('File Not Uploaded')
+    except Exception as e:
+        raise SharingException(e,sys)
 
 def write_yaml_file(file_path:str,data:dict=None):
     """
