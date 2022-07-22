@@ -5,7 +5,6 @@ from sharing.entity.config_entity import ModelPusherConfig
 import os, sys
 import shutil
 
-
 class ModelPusher:
 
     def __init__(self, model_pusher_config: ModelPusherConfig,
