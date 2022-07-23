@@ -2,6 +2,7 @@ from sharing.logger import logging
 from sharing.exception import SharingException
 from sharing.entity.artifact_entity import ModelPusherArtifact, ModelEvaluationArtifact 
 from sharing.entity.config_entity import ModelPusherConfig
+from sharing.util.util import upload_model_s3
 import os, sys
 import shutil
 
@@ -29,9 +30,10 @@ class ModelPusher:
 
             shutil.copy(src=evaluated_model_file_path, dst=export_model_file_path)
 
-        
+            #save model to s3 bucket
+            upload_model_s3(model_path=export_model_file_path)
 
-            #we can call a function to save model to Azure blob storage/ google cloud strorage / s3 bucket
+            
             logging.info(
                 f"Trained model: {evaluated_model_file_path} is copied in export dir:[{export_model_file_path}]")
 

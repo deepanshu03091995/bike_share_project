@@ -10,6 +10,7 @@ from sharing.util.util import read_yaml_file, write_yaml_file
 from sharing.logger import get_log_dataframe
 from sharing.entity.sharing_predictor import SharingPredictor, SharingData
 
+
 ROOT_DIR = os.getcwd()
 LOG_FOLDER_NAME = "logs"
 PIPELINE_FOLDER_NAME = "housing"
@@ -72,7 +73,7 @@ def predict():
             temp = float(request.form['temp'])
             humidity = float(request.form['humidity'])
             windspeed = float(request.form['windspeed'])
-            print(season,year,month,hour,holiday,weekday,workingday, weather, temp, humidity,windspeed)
+            #print(season,year,month,hour,holiday,weekday,workingday, weather, temp, humidity,windspeed)
             sharing_data = SharingData(season=season,
             year = year,month= month,hour = hour, holiday=holiday, weekday = weekday, workingday=workingday, weather=weather, temp = temp,
             humidity=humidity, windspeed=windspeed)
