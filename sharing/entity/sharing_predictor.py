@@ -127,10 +127,10 @@ class SharingPredictor:
             #prefix=self.create_prefix()
             #logging.info(f"Prefix Created",{prefix})
            
-            for obj in bucket.objects.filter(Prefix = ""):
+            '''for obj in bucket.objects.filter(Prefix = ""):
                 if not os.path.exists(os.path.dirname(obj.key)):
                     os.makedirs(os.path.dirname(obj.key))
-                bucket.download_file(obj.key, obj.key) # save to same path
+                bucket.download_file(obj.key, obj.key) # save to same path'''
 
             logging.info("Downloaded Model From S3")
 

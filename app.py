@@ -20,8 +20,8 @@ MODEL_CONFIG_FILE_PATH = os.path.join(ROOT_DIR, CONFIG_DIR, "model.yaml")
 LOG_DIR = os.path.join(ROOT_DIR, LOG_FOLDER_NAME)
 PIPELINE_DIR = os.path.join(ROOT_DIR, PIPELINE_FOLDER_NAME)
 MODEL_DIR = os.path.join(ROOT_DIR, SAVED_MODELS_DIR_NAME)
-HOUSING_DATA_KEY = "housing_data"
-MEDIAN_HOUSING_VALUE_KEY = "median_house_value"
+SHARING_DATA_KEY = "sharing_data"
+MEDIAN_SHARING_VALUE_KEY = "median_share_value"
 
 app=Flask(__name__)
 
@@ -43,7 +43,7 @@ def index():
 @app.route("/index",methods=['GET','POST'])
 def dashboard():
     try:
-        return render_template('index1.html')
+        return render_template('index.html')
     except Exception as e:
         sharing = SharingException(e,sys)
         logging.info(sharing.error_message)
@@ -51,15 +51,10 @@ def dashboard():
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
     try:
-        list_four = [1,2,3,4]
-        list_two = [0,1]
-        weekdays = [1,2,3,4,5,6,7]
-        months = [0,1,2,3,4,5,6,7,8,9,10,11,12]
-        hours = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
-
+       
         context = {
-        HOUSING_DATA_KEY: None,
-        MEDIAN_HOUSING_VALUE_KEY: None
+        SHARING_DATA_KEY: None,
+        MEDIAN_SHARING_VALUE_KEY: None
     }
 
         if request.method == 'POST':
@@ -74,21 +69,19 @@ def predict():
             temp = float(request.form['temp'])
             humidity = float(request.form['humidity'])
             windspeed = float(request.form['windspeed'])
-            #print(season,year,month,hour,holiday,weekday,workingday, weather, temp, humidity,windspeed)
+            print(season,year,month,hour,holiday,weekday,workingday, weather, temp, humidity,windspeed)
             sharing_data = SharingData(season=season,
             year = year,month= month,hour = hour, holiday=holiday, weekday = weekday, workingday=workingday, weather=weather, temp = temp,
             humidity=humidity, windspeed=windspeed)
             sharing_df = sharing_data.get_housing_input_data_frame()
             sharing_predictor = SharingPredictor(model_dir=MODEL_DIR)
-            
-            median_housing_value = sharing_predictor.predict(X=sharing_df)
+            median_sharing_value = sharing_predictor.predict(X=sharing_df)
             context = {
-            HOUSING_DATA_KEY: sharing_data.get_sharing_data_as_dict(),
-            MEDIAN_HOUSING_VALUE_KEY: median_housing_value,
+            SHARING_DATA_KEY: sharing_data.get_sharing_data_as_dict(),
+            MEDIAN_SHARING_VALUE_KEY: int(median_sharing_value),
             }
-       
-            return render_template('predict.html', context=context, list_four = list_four,list_two = list_two, months = months, hours = hours, weekdays = weekdays)
-        return render_template("predict.html", context=context,list_four = list_four,list_two = list_two, months = months, hours = hours, weekdays = weekdays)
+            return render_template('predict.html', context=context)
+        return render_template("predict.html", context=context)
     
     except Exception as e:
             raise SharingException(e, sys) from e
@@ -226,7 +219,7 @@ def train():
     pipeline = Pipeline(config=Configuartion(current_time_stamp=get_current_time_stamp()))
     if not Pipeline.experiment.running_status:
         message = "Training started."
-        pipeline.start()
+        #pipeline.start()
     else:
         message = "Training is already in progress."
     context = {
