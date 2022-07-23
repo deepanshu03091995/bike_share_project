@@ -9,7 +9,8 @@ from sharing.pipeline.pipeline import Pipeline
 from sharing.util.util import read_yaml_file, write_yaml_file
 from sharing.logger import get_log_dataframe
 from sharing.entity.sharing_predictor import SharingPredictor, SharingData
-
+from sharing.config.configuration import *
+from sharing.component.data_ingestion import DataIngestion
 
 ROOT_DIR = os.getcwd()
 LOG_FOLDER_NAME = "logs"
@@ -89,6 +90,18 @@ def predict():
             return render_template('predict.html', context=context, list_four = list_four,list_two = list_two, months = months, hours = hours, weekdays = weekdays)
         return render_template("predict.html", context=context,list_four = list_four,list_two = list_two, months = months, hours = hours, weekdays = weekdays)
     
+    except Exception as e:
+            raise SharingException(e, sys) from e
+
+@app.route('/batch_predict')
+def batch_predict():
+    try:
+        config = Configuartion()
+        test_dir = config.get_data_ingestion_config().ingested_test_dir
+        #file_name = os.listdir(test_dir)[0]
+        #print(file_name)
+        
+        return render_template('batch.html')
     except Exception as e:
             raise SharingException(e, sys) from e
 
