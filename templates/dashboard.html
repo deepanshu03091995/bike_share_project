@@ -10,6 +10,8 @@
     
     <link rel="stylesheet" href="{{ url_for('static', filename='/css/dataTables.bootstrap5.min.css') }}" />
     <script src="https://kit.fontawesome.com/778c911bcf.js" crossorigin="anonymous"></script>
+     <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}" />
+    
 
 
     
@@ -157,9 +159,9 @@
               </a>
             </li>
             <li>
-              <a href="/view_experiment_hist" class="nav-link px-3">
+              <a href="/saved_models" class="nav-link px-3">
                 <span class="me-2"><i class="bi bi-book-fill"></i></span>
-                <span>Train Estimator</span>
+                <span>Trained Models</span>
               </a>
             </li>
             <li class="my-4"><hr class="dropdown-divider bg-light" /></li>
@@ -183,7 +185,13 @@
             <li>
               <a href="/train" class="nav-link px-3">
                 <span class="me-2"><i class="bi bi-table"></i></span>
-                <span>Trained Models</span>
+                <span>Initiate Model Training</span>
+              </a>
+            </li>
+            <li>
+              <a href="/update_model_config" class="nav-link px-3">
+                <span class="me-2"><i class="bi bi-table"></i></span>
+                <span>Update Model Config</span>
               </a>
             </li>
             <li class="my-4"><hr class="dropdown-divider bg-light" /></li>
@@ -193,7 +201,7 @@
               </div>
             </li>
             <li>
-              <a href="/artifact" class="nav-link px-3">
+              <a href="/reports" class="nav-link px-3">
                 <span class="me-2"><i class="bi bi-graph-up"></i></span>
                 <span>Reports</span>
               </a>
@@ -208,105 +216,149 @@
     <main class="mt-5 pt-3">
       <div class="container-fluid">
        
-        <div class="row mb-3">
-          <div class="col-xl-3 col-lg-6">
-            <div class="card card-inverse card-success">
-              <div class="card-block bg-success">
-                <div class="rotate">
-                  <i class="fa fa-user fa-5x"></i>
-                </div>
-                <h6 class="text-uppercase">Users</h6>
-                <h1 class="display-1">134</h1>
+        <div class="row">
+          <div class="col-lg-3 col-sm-6">
+              <div class="card-box bg-blue">
+                  <div class="inner">
+                      <h3> {{ log_count }} </h3>
+                      <p> LOGS COUNT </p>
+                  </div>
+                  <div class="icon">
+                      <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
+                  </div>
+                  <a href="/logs" class="card-box-footer">View More <i class="fa fa-arrow-circle-right"></i></a>
               </div>
-            </div>
           </div>
-          <div class="col-xl-3 col-lg-6">
-            <div class="card card-inverse card-primary">
-              <div class="card-block bg-primary">
-                <div class="rotate">
-                  <i class="fa fa-list fa-4x"></i>
-                </div>
-                <h6 class="text-uppercase">Posts</h6>
-                <h1 class="display-1">87</h1>
+  
+          <div class="col-lg-3 col-sm-6">
+              <div class="card-box bg-green">
+                  <div class="inner">
+                      <h3> {{trained_count}} </h3>
+                      <p> TRAINED MODELS COUNT </p>
+                  </div>
+                  <div class="icon">
+                      <i class="fa-solid fa-cubes" aria-hidden="true"></i>
+                  </div>
+                  <a href="/saved_models" class="card-box-footer">View More <i class="fa fa-arrow-circle-right"></i></a>
               </div>
-            </div>
           </div>
-          <div class="col-xl-3 col-lg-6">
-            <div class="card card-inverse card-info">
-              <div class="card-block bg-info">
-                <div class="rotate">
-                  <i class="fa fa-twitter fa-5x"></i>
-                </div>
-                <h6 class="text-uppercase">Tweets</h6>
-                <h1 class="display-1">125</h1>
+          <div class="col-lg-3 col-sm-6">
+              <div class="card-box bg-orange">
+                  <div class="inner">
+                      <h3> 5 </h3>
+                      <p> ARTIFACT COUNT </p>
+                  </div>
+                  <div class="icon">
+                      <i class="fa-solid fa-box-archive" aria-hidden="true"></i>
+                  </div>
+                  <a href="/artifact" class="card-box-footer">View More <i class="fa fa-arrow-circle-right"></i></a>
               </div>
-            </div>
           </div>
-          <div class="col-xl-3 col-lg-6">
-            <div class="card card-inverse card-warning">
-              <div class="card-block bg-warning">
-                <div class="rotate">
-                  <i class="fa fa-share fa-5x"></i>
-                </div>
-                <h6 class="text-uppercase">Shares</h6>
-                <h1 class="display-1">36</h1>
+          <div class="col-lg-3 col-sm-6">
+              <div class="card-box bg-red">
+                  <div class="inner">
+                      <h3> 1 </h3>
+                      <p> REPORTS COUNT </p>
+                  </div>
+                  <div class="icon">
+                      <i class="fa-brands fa-html5"></i>
+                  </div>
+                  <a href="/reports" class="card-box-footer">View More <i class="fa fa-arrow-circle-right"></i></a>
               </div>
-            </div>
           </div>
-        </div>
         <!--/row-->
       
-        <div class="row">
-          <div class="col-md-12 mb-3">
-            <div class="card">
-              <div class="card-header">
-                <span><i class="bi bi-table me-2"></i></span> Data Table
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table
-                    id="example"
-                    class="table table-striped data-table"
-                    style="width: 100%"
-                  >
+      
+        <section class="section services-section" id="services">
+          <div class="container">
+             
+              <div class="row">
+                  <!-- feaure box -->
+                  <div class="col-sm-6 col-lg-4">
+                      <div class="feature-box-1">
+                          <div class="icon">
+                              <i class="fa fa-desktop"></i>
+                          </div>
+                          <div class="feature-content">
+                              
+                              <a href="/logs" ><h5>Log Files </h5></a>
+                              <p>All model training log file can be downloaded.</p>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- / -->
+                  <!-- feaure box -->
+                  <div class="col-sm-6 col-lg-4">
+                      <div class="feature-box-1">
+                          <div class="icon">
+                              <i class="fa fa-user"></i>
+                          </div>
+                          <div class="feature-content">
+                            <a href="/artifact" ><h5>Artifact Files </h5></a>
+                              <p>All model artifacts file can be downloaded.</p>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- / -->
+                    <!-- feaure box -->
+                    <div class="col-sm-6 col-lg-4">
+                      <div class="feature-box-1">
+                          <div class="icon">
+                              <i class="fa fa-user"></i>
+                          </div>
+                          <div class="feature-content">
+                             <a href="/saved_models" ><h5>Trained Models</h5></a>
+                              <p>All model artifacts file can be downloaded.</p>
+                          </div>
+                      </div>
+                  </div>
+                    <!-- / -->
+                  <!-- feaure box -->
+                  <div class="col-sm-6 col-lg-4">
+                      <div class="feature-box-1">
+                          <div class="icon">
+                              <i class="fa fa-comment"></i>
+                          </div>
+                          <div class="feature-content">
+                              <a href="/train" ><h5>Initiate model training</h5></a>
+                              <p>Model training will be done. Files such as log, artifact and models can be viewed and downloaded using appropriate link.</p>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- / -->
                 
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>Edinburgh</td>
-                          <td>61</td>
-                          <td>2011/04/25</td>
-                          <td>$320,800</td>
-                        </tr>
-                    </tbody>
-                            
-                    <tfoot>
-                      <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
+                  <!-- feaure box -->
+                  <div class="col-sm-6 col-lg-4">
+                      <div class="feature-box-1">
+                          <div class="icon">
+                              <i class="fa fa-th"></i>
+                          </div>
+                          <div class="feature-content">
+                            <a href="/train" ><h5>Single Predictor</h5></a>
+
+                              <p>Form will be displayed for single prediction. Submit the form to get estimated count for Rental Bike Count. </p>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- / -->
+                    <!-- feaure box -->
+                    <div class="col-sm-6 col-lg-4">
+                      <div class="feature-box-1">
+                          <div class="icon">
+                              <i class="fa fa-th"></i>
+                          </div>
+                          <div class="feature-content">
+                              <h5>Batch Predictor</h5>
+                              <p>Form will be displayed for batch prediction. Submit the form to get estimated count for Rental Bike Count. </p>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- / -->
               </div>
-            </div>
           </div>
-        </div>
+      </section>
+
+
       </div>
     </main>
     

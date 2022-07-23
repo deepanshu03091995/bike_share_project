@@ -1,4 +1,4 @@
-{% extends 'header.html' %}
+{% extends 'dashboard.html' %}
 
 {% block head %}
 
@@ -7,9 +7,15 @@
 {% endblock %}
 
 {% block content %}
+<main class="mt-5 pt-3">
+    <div class="container-fluid">
 
-
-Go to <a class="btn btn-primary" href="/">Home</a>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/update_model_config">Model Config</a></li>
+            </ol>
+        </nav>
 <div class="row">
     <div class="col-md-12 " style="margin-bottom:20px;height:500px;overflow:scroll">
         <form method="post">
@@ -36,6 +42,8 @@ Go to <a class="btn btn-primary" href="/">Home</a>
         </form>
     </div>
 </div>
+</div>
+</main>
 
 
         

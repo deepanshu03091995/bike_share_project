@@ -23,11 +23,16 @@ MEDIAN_HOUSING_VALUE_KEY = "median_house_value"
 
 app=Flask(__name__)
 
-
 @app.route("/",methods=['GET','POST'])
 def index():
     try:
-        return render_template('dashboard.html',dashboard=True)
+        log_count = 0
+        trained_count = 0
+        for root_dir, cur_dir, files in os.walk(LOG_FOLDER_NAME):
+            log_count += len(files)
+        for root_dir, cur_dir, files in os.walk(SAVED_MODELS_DIR_NAME):
+            trained_count += len(files)
+        return render_template('dashboard.html',dashboard=True,log_count=log_count, trained_count= trained_count)
     except Exception as e:
         sharing = SharingException(e,sys)
         logging.info(sharing.error_message)
@@ -67,7 +72,7 @@ def predict():
             temp = float(request.form['temp'])
             humidity = float(request.form['humidity'])
             windspeed = float(request.form['windspeed'])
-            #print(season,year,month,hour,holiday,weekday,workingday, weather, temp, humidity,windspeed)
+            print(season,year,month,hour,holiday,weekday,workingday, weather, temp, humidity,windspeed)
             sharing_data = SharingData(season=season,
             year = year,month= month,hour = hour, holiday=holiday, weekday = weekday, workingday=workingday, weather=weather, temp = temp,
             humidity=humidity, windspeed=windspeed)
@@ -78,7 +83,8 @@ def predict():
             context = {
             HOUSING_DATA_KEY: sharing_data.get_sharing_data_as_dict(),
             MEDIAN_HOUSING_VALUE_KEY: median_housing_value,
-        }
+            }
+       
             return render_template('predict.html', context=context, list_four = list_four,list_two = list_two, months = months, hours = hours, weekdays = weekdays)
         return render_template("predict.html", context=context,list_four = list_four,list_two = list_two, months = months, hours = hours, weekdays = weekdays)
     
@@ -153,7 +159,7 @@ def render_artifact_dir(req_path):
     # Joining the base and the requested path
     print(f"req_path: {req_path}")
     abs_path = os.path.join(req_path)
-    print(abs_path)
+    print("abs_path",abs_path)
     # Return 404 if path doesn't exist
     if not os.path.exists(abs_path):
         return abort(404)
@@ -178,6 +184,10 @@ def render_artifact_dir(req_path):
         "parent_label": abs_path
     }
     return render_template('files.html', result=result)
+
+@app.route('/reports')
+def reports():
+    return render_template('reports.html')
 
 @app.route("/update_model_config", methods=['GET', 'POST'])
 def update_model_config():
@@ -210,7 +220,6 @@ def train():
         "message": message
     }
     return render_template('train.html', context=context)
-
 
 if __name__=="__main__":
     app.run(debug=True)

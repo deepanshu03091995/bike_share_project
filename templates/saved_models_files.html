@@ -1,15 +1,23 @@
-{% extends 'header.html' %}
+{% extends 'dashboard.html' %}
 
 {% block head %}
 
 
-<title>Model List</title>
+<title>Trained Models</title>
 {% endblock %}
 
 {% block content %}
 
 
+<main class="mt-5 pt-3">
+    <div class="container-fluid">
 
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/saved_models">Trained Models</a></li>
+            </ol>
+        </nav>
 
     {% if "saved_models" in result['parent_folder'] %}
     <a href="/saved_models/{{result['parent_folder']}}"><i class="fa fa-arrow-left" aria-hidden="true"></i>Back</a>
@@ -33,5 +41,8 @@
         {% endfor %}
        
     </div>
+
+    </div>
+    </main>
 
 {% endblock %}
