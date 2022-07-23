@@ -16,11 +16,11 @@
 
          <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="/logs">Logs</a></li>
             </ol>
         </nav>
-    
+    <hr>
 {% if "logs" in result['parent_folder'] %}
 <a href="/logs/{{result['parent_folder']}}"><i class="fa fa-arrow-left" aria-hidden="true"></i>Back</a>
 

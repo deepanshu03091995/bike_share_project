@@ -25,8 +25,8 @@ MEDIAN_SHARING_VALUE_KEY = "median_share_value"
 
 app=Flask(__name__)
 
-@app.route("/",methods=['GET','POST'])
-def index():
+@app.route("/dashboard",methods=['GET','POST'])
+def dashboard():
     try:
         log_count = 0
         trained_count = 0
@@ -40,8 +40,8 @@ def index():
         logging.info(sharing.error_message)
     logging.info("Testing logger module")
 
-@app.route("/index",methods=['GET','POST'])
-def dashboard():
+@app.route("/",methods=['GET','POST'])
+def index():
     try:
         return render_template('index.html')
     except Exception as e:
