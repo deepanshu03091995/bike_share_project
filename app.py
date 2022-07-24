@@ -1,4 +1,5 @@
 import sys,pip,os,json
+import pandas as pd
 from matplotlib.style import context
 from flask import Flask,send_file, abort, render_template, request,url_for
 from sharing.logger import logging
@@ -16,6 +17,7 @@ ROOT_DIR = os.getcwd()
 LOG_FOLDER_NAME = "logs"
 PIPELINE_FOLDER_NAME = "housing"
 SAVED_MODELS_DIR_NAME = "saved_models"
+BATCH_DATA ='hours.csv'
 MODEL_CONFIG_FILE_PATH = os.path.join(ROOT_DIR, CONFIG_DIR, "model.yaml")
 LOG_DIR = os.path.join(ROOT_DIR, LOG_FOLDER_NAME)
 PIPELINE_DIR = os.path.join(ROOT_DIR, PIPELINE_FOLDER_NAME)
@@ -89,12 +91,12 @@ def predict():
 @app.route('/batch_predict')
 def batch_predict():
     try:
-        config = Configuartion()
-        test_dir = config.get_data_ingestion_config().ingested_test_dir
-        #file_name = os.listdir(test_dir)[0]
-        #print(file_name)
-        
-        return render_template('batch.html')
+        batch_data_path = os.path.join(ROOT_DIR,BATCH_DATA)
+        df = pd.read_csv(batch_data_path)
+        sharing_predictor = SharingPredictor(model_dir=MODEL_DIR)
+        batch_prediction = sharing_predictor.predict(df)
+        df.to_html("batch_prediction.html")
+        return render_template('batch.html',data=batch_prediction)
     except Exception as e:
             raise SharingException(e, sys) from e
 
