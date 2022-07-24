@@ -215,18 +215,30 @@ def update_model_config():
 
 @app.route('/train', methods=['GET', 'POST'])
 def train():
+    pipeline = Pipeline(config=Configuartion(current_time_stamp=get_current_time_stamp()))
+    context = {
+        "experiment": pipeline.get_experiments_status().to_html(classes='table table-striped col-12'),
+    }
+    return render_template('train.html',context=context)
+
+@app.route('/initiate_train', methods=['GET', 'POST'])
+def initiate_train():
     message = ""
     pipeline = Pipeline(config=Configuartion(current_time_stamp=get_current_time_stamp()))
     if not Pipeline.experiment.running_status:
-        message = "Training started."
-        #pipeline.start()
+        print("NOT ",Pipeline.experiment.running_status)
+        message = "Training started Successfully!"
+        pipeline.start()
     else:
+        print("Progress STATUS ",Pipeline.experiment.running_status)
         message = "Training is already in progress."
     context = {
         "experiment": pipeline.get_experiments_status().to_html(classes='table table-striped col-12'),
-        "message": message
+        "message": message,
+        "status":Pipeline.experiment.running_status
     }
-    return render_template('train.html', context=context)
+    return render_template('initiate_training.html', context=context)
+    
 
 if __name__=="__main__":
     app.run(debug=True)
