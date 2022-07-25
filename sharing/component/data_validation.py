@@ -9,6 +9,8 @@ from evidently.model_profile.sections import DataDriftProfileSection
 from evidently.dashboard import Dashboard
 from evidently.dashboard.tabs import DataDriftTab
 import json
+from sharing.constant import *
+from sharing.util.util import load_data, read_yaml_file
 
 
 class DataValidation:
@@ -20,6 +22,39 @@ class DataValidation:
             logging.info(f"{'>>'*30}Data Valdaition log started.{'<<'*30} \n\n")
             self.data_validation_config = data_validation_config
             self.data_ingestion_artifact = data_ingestion_artifact
+            
+        except Exception as e:
+            raise SharingException(e,sys) from e
+
+    def validate_dataset_schema(self,schema_file_path, file_path)->bool:
+        try:
+            validation_status = False
+            column_count_equal = False
+            column_names_same = False
+
+            datset_schema = read_yaml_file(schema_file_path)
+            
+            schema = datset_schema[DATASET_SCHEMA_COLUMNS_KEY]
+
+            df = pd.read_csv(file_path)
+
+            # Checking Column number in schema file & dataset same or not
+
+            if len(list(schema.keys())) == len(df.columns):
+                column_count_equal = True
+
+            # Checking Column names in schema file & dataset same or not
+            for column in df.columns:
+                if column in list(schema.keys()):
+                    df[column].astype(schema[column])
+                    column_names_same = True
+                else:
+                    column_names_same = False
+
+            schema_season_values = datset_schema[DATASET_DOMAIN_VALUE_KEY][DATASET_SEASON_DOMAIN_VALUE]
+
+            validation_status = True
+            return validation_status 
         except Exception as e:
             raise SharingException(e,sys) from e
     

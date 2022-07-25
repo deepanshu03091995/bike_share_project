@@ -31,12 +31,11 @@ categorical_columns:
 target_column: count
 
 domain_value:
-  ocean_proximity:
-    - <1H OCEAN
-    - INLAND
-    - ISLAND
-    - NEAR BAY
-    - NEAR OCEAN
+  season:
+    - 1
+    - 2
+    - 3
+    - 4
 
 
 

@@ -19,9 +19,10 @@ def main():
         #print(config)
         #ingested = DataIngestion(data_ingestion_config=DataIngestionConfig)
         #ingested.download_sharing_data()
-        #schema_file = r"D:\GIT\Challenge\bike_share_project\config\schema.yaml"
-        #file_pth = r"D:\GIT\Challenge\bike_share_project\sharing\artifact\data_ingestion\2022-07-14-07-31-02\ingested_data\train\hours.csv"
-        
+        #schema_file = r"D:\GIT\bike_share_project\config\schema.yaml"
+        #file_pth = r"D:\GIT\bike_share_project\sharing\artifact\data_ingestion\2022-07-24-06-55-53\ingested_data\train\hours.csv"
+        #validate = DataValidation(data_ingestion_artifact=DataIngestionConfig,data_validation_config=DataValidationConfig)
+        #validate.validate_dataset_schema(schema_file_path = schema_file, file_path =file_pth)        
         #DataTransformation.load_data(file_path=file_pth,schema_file_path=schema_file)
     except Exception as e:
         logging.error(f"{e}")

@@ -126,15 +126,15 @@ class SharingPredictor:
 
             #prefix=self.create_prefix()
             #logging.info(f"Prefix Created",{prefix})
-           
-            '''for obj in bucket.objects.filter(Prefix = ""):
-                if not os.path.exists(os.path.dirname(obj.key)):
-                    os.makedirs(os.path.dirname(obj.key))
-                bucket.download_file(obj.key, obj.key) # save to same path'''
-
+            str='downloaded_models'
+            
+            for obj in bucket.objects.filter(Prefix = ""):
+                path = os.path.join(str,obj.key)
+                if not os.path.exists(os.path.dirname(path)):
+                    os.makedirs(os.path.dirname(path))
+                bucket.download_file(obj.key, path) # save to same path
             logging.info("Downloaded Model From S3")
 
-            
         except botocore.exceptions.ClientError as e:
             if e.response['Error']['Code'] == "404":
                 print("The object does not exist.")

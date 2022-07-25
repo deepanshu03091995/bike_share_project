@@ -51,6 +51,8 @@ NUMERICAL_COLUMN_KEY = "numerical_columns"
 CATEGORICAL_COLUMN_KEY = "categorical_columns"
 TARGET_COLUMN_KEY = "target_column"
 DATASET_SCHEMA_COLUMNS_KEY=  "columns"
+DATASET_DOMAIN_VALUE_KEY ="domain_value"
+DATASET_SEASON_DOMAIN_VALUE = 'season'
 
 # Model Training related variables
 
